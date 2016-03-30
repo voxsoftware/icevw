@@ -1,0 +1,30 @@
+{
+	"name": "icevw",
+  	"description": "Ejecute código del lado cliente desde el navegador ",
+  	"version": "0.1.0",
+	"main":"./index",
+	"license":"MIT",
+	"author": {
+	  "name": "James Suárez",
+	  "email": "xtreme.maicolxt94@gmail.com"
+	},
+	"preferGlobal": false,
+	"maintainers": [
+	    {
+	      "name": "James",
+	      "email": "xtreme.maicolxt94@gmail"
+	    }
+
+	],
+	"repository": {
+	    "type": "git",
+	    "url": "https://gitlab.com/voxsoftware/icevw"
+	},
+	"dependencies": {
+    	"vw-session-file-store": "^0.x",
+    	"express-session": "^1.13.0",
+    	"uniqid": ">=1.0.0",
+    	"md5": "^2.1.0",
+    	"decompress-zip": "^0.2.0"
+    }
+}

@@ -1,0 +1,12 @@
+{
+	"org":{
+		"vox":{
+			"icevw":{
+				"readPath": "org/vox/icevw/",
+				"routes":{
+					"readPath": "org/vox/icevw/routes"
+				}
+			}
+		}
+	}
+}
