@@ -1,4 +1,4 @@
-
+var icevw=core.org.vox.icevw
 import Path from 'path'
 import Log from './ConsoleLog'
 import fs from 'fs'

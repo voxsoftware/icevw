@@ -24,7 +24,6 @@
     	"vw-session-file-store": "^0.x",
     	"express-session": "^1.13.0",
     	"uniqid": ">=1.0.0",
-    	"md5": "^2.1.0",
-    	"decompress-zip": "^0.2.0"
+    	"md5": "^2.1.0"
     }
 }

@@ -1,0 +1,35 @@
+
+<vw:raw>&lt;DOCTYPE html&gt;</vw:raw>
+<html>
+	
+	<head>
+
+		<meta charset="utf8"/>
+		<title><vw:expression>context.arguments.title||"IceVW"</vw:expression></title>
+
+
+		<script type="text/javascript" src="/assets/js/core-basic.js"></script>
+		<script type="text/javascript" src="/assets/js/vox.js"></script>		
+		<link rel="stylesheet" type="text/css" href="/assets/css/vox.css"/>		
+		<link rel="stylesheet" type="text/css" href="/assets/css/estilo.css"/>		
+		<link rel="import" href="/assets/html/voxcss.html" />
+		
+		<script type="text/javascript">
+			(function(){
+				window.$= core.VW.Web.JQuery
+				core.VW.Ecma2015.regeneratorRuntime // Cargar runtime ...
+				$(function(){
+					core.VW.Web.Elements.register()
+				})
+			})()
+		</script>
+		<vw:import section name='head'></vw:import>
+		<vw:import section name='script'></vw:import>
+
+
+	</head>
+	<body>
+		<vw:import section name='content'></vw:import>
+	</body>
+
+</html>

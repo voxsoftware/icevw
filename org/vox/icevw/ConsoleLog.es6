@@ -16,6 +16,20 @@ class Log{
 		core.VW.Console.write("", args.request.url).writeLine()
 	}
 
+	printInfo(title, msg){
+		if(title){
+			core.VW.Console.foregroundColor= core.System.ConsoleColor.White
+			core.VW.Console.backgroundColor= core.System.ConsoleColor.Blue
+			core.VW.Console.write("",title,"")
+			core.VW.Console.resetColors()
+			core.VW.Console.write(" ")
+		}
+		
+		core.VW.Console.foregroundColor= core.System.ConsoleColor.Yellow
+		core.VW.Console.writeLine(msg,"")
+		core.VW.Console.resetColors()
+	}
+
 	printError(ex){
 		core.VW.Console.foregroundColor= core.System.ConsoleColor.White
 		core.VW.Console.backgroundColor= core.System.ConsoleColor.Red
@@ -23,7 +37,7 @@ class Log{
 		core.VW.Console.resetColors()
 		core.VW.Console.write("", ex.message +" | " +ex.stack).writeLine()	
 		//if(ex.errors){
-			core.VW.Console.write("---------- Información extra")
+			core.VW.Console.writeLine("---------- Información extra")
 			for(var id in ex){
 				if(id!="stack" && id!='message'){
 					core.VW.Console.coloredWriteLine(id,": ", ex[id])

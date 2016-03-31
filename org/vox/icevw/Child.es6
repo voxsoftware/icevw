@@ -1,28 +1,58 @@
 import ChildProcess from 'child_process'
-
+import ChildClosedException from './ChildClosedException'
 
 class Child{
 	
-	static get(uid, path){
-		if(!e=Child.d[uid])
-			e= new Child(uid,path)
+	static get(uid, path, Log){
+		var e
+		if(!(e=Child.d[uid]))
+			e= new Child(uid,path, Log)
 		return e
 	}
 
 
-	constructor(uid, path){
+	constructor(uid, path, Log){
 		this.uid= uid
 		this.path= path
-		this.init()
+		this.log= Log
 	}
 
-	init(){
+	async init(){
 		arg=process.argv
-		var p= ChildProcess.spawn(arg[0],arg[1], this.path)
-		this.ipc= new core.VW.IPC.Comunication(p)
-		this.SHM= new core.VW.IPC.ShareMethods(this.ipc)
+		var p= ChildProcess.spawn(arg[0],[arg[1], this.path])
+		this.ipc= new core.VW.IPC.Comunication()
+		this.ipc.init(p)
+		this.$SHM= new core.VW.IPC.ShareMethods(this.ipc)
+		
+		p.on('exit', ()=>{
+			this.exited= true
+			this.log.printInfo("Child", "Proceso hijo finalizado: " + p.pid)
+			if(this.$time){
+				clearTimeout(this.$time)
+				this.$time=null
+			}
+		})
+		await this.SHM.callAsync("initialize")
+
+		if(this.log)
+			this.log.printInfo("Child", "Nuevo proceso hijo: " + p.pid)
+
+		this.$time=setInterval(()=>{
+			if(this.$active)
+				this.$active= false
+			else
+				p.kill()
+		}, 60000)
 	}
 
+
+	get SHM(){
+		if(this.exited)
+			throw new ChildClosedException(`El canal de comunicación icevw \`${this.uid}\` está cerrado.`)
+
+		this.$active= true
+		return this.$SHM
+	}
 
 
 	static async apiCall(data){
@@ -34,10 +64,16 @@ class Child{
 		var app= Child.get(uid)
 		if(!app)
 			throw new core.System.Exception(`La aplicación con uid ${uid} no es válida. `)
-
-		var arguments= data.arguments||[]
-		return await app.SHM.callAsync(data.method, arguments)
+		if(data.method=="??"){
+			app.$active=true
+			return
+		}
+		var args= data.arguments||[]
+		return await app.SHM.callAsync(data.method, args)
+		
 	}
 
 
 }
+Child.d=[]
+export default Child

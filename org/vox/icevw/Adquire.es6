@@ -4,44 +4,49 @@ import md5 from 'md5'
 import uniqid from 'uniqid'
 import fs from 'fs'
 import Path from 'path'
-import decompress from 'decompress-zip'
+//import decompress from 'decompress-zip'
+import Child from './Child'
 
 class Adquire{
 	
 	constructor(App){
 		this.app= App
 		this.appPath= Path.join(this.app.configurationPath, "apps")
-		if(!fs.existsSync(dir))
-			fs.mkdirSync(dir)
+		if(!fs.existsSync(this.appPath))
+			fs.mkdirSync(this.appPath)
 
 	}
 
-	/*
-	enable(req,res,callback){
-		try
-			data=if req.method=="GET" then req.query else req.body
-			if not data.domain
-				throw new Error("Debe especificar el dominio")
-			if not req.session[data.domain]
-				req.session[data.domain]={}
-			if req.session[data.domain].md5hash!=data.hash
-				throw new Error("El token de comprobación no es válido")
+	
+	enable(args){
+		
+		var req= args.request
+		var data= req.method=="GET"? req.query:req.body
+		if(!data.domain)
+			throw new Error("Debe especificar el dominio")
+		if(!data.app)
+			throw new Error("Debe especificar el argumento `app`")
+		if(!req.session[data.domain])
+			req.session[data.domain]={}
 
-			req.session[data.domain].enabled= true
-			callback undefined,
-				"enabled":true,
-				"hash":req.session[data.domain].md5hash
-		catch e
-			return callback e
+		if(req.session[data.domain].md5hash!=data.hash)
+			throw new Error("El token de comprobación no es válido")
+
+		req.session[data.domain][data.app]= true
+		var resultado= {
+			"enabled":true,
+			"hash":req.session[data.domain].md5hash
+		}
+		return resultado
 	}
-	*/
+	
 	
 
 	download(app, url){
 
 		var c=undefined
 		var task= new core.VW.Task()
-
+		vw.info("here")
 		try{
 
 
@@ -75,7 +80,7 @@ class Adquire{
 					catch(e){}
 
 					
-					fs.move(tpath,rpath,(er)=>{
+					fs.rename(tpath,rpath,(er)=>{
 						if(er){
 							task.exception= er
 							task.finish()
@@ -88,36 +93,50 @@ class Adquire{
 			}
 
 			var req= new core.VW.Http.Request(url)
-			req.timeoout= 60000
+			req.timeout= 5000
 			var task1= req.getResponseAsync()
 			req.originalReq.pipe(fs.createWriteStream(file))
 			task1.oncomplete= function(){
 				if(task1.exception){
-					task.exception= task1.exception
-					return task.finish()
+					c(task1.exception)
 				}
 				else{
 
 					var response= task.result
 					if(response.statusCode==404){
-						task.exception= "La url de la aplicación no es válida"
-						task.finish()
+						c("La url de la aplicación no es válida")
 						return 
 					}
 
 					// Descomprimir ....
+					/*
 					unzipper = new decompress(file)
 					unzipper.on("error", (er)=>{
-						task.exception= er
-						task.finish()
+						c(er)
 					})
 
 					unzipper.on('extract', (log)=>{
-						task.finish()
+						c()
 					})
 					unzipper.extract({
 						"path":tpath
 					})
+					*/
+
+					// Para Descomprimir ahora se usa vcf, se crea un child_process 
+					// para evitar bloqueos ...
+					var ipc= new core.VW.IPC.Comunication()
+					ipc.createChildProcess()
+					var shm= new core.VW.IPC.ShareMethods(ipc)
+					var task2= shm.callAsync("icevwUtil.decompress", [file,tpath])
+					task2.oncomplete= function(){
+						ipc.cp.kill() // Cerrar el proceso 
+						if(task2.exception){
+							c(task2.exception)
+						}else{
+							c()
+						}
+					}
 				}
 			}
 			
@@ -135,21 +154,21 @@ class Adquire{
 		
 		
 		if(!data.app)
-			throw new Error "Debe especificar el id de la aplicación"
+			throw new Error("Debe especificar el id de la aplicación")
 		if(!data.url)
-			throw new Error "Debe especificar la url de la aplicación"
+			throw new Error("Debe especificar la url de la aplicación")
 		if(!data.uid)
-			throw new Error "El API no es compatible. Debe especificar un id alfanúmerico"
+			throw new Error("Debe especificar el argumento `uid`")
 
 		var dir= Path.join(this.appPath, data.app)
 		if(!fs.existsSync(dir))
 			await this.download(data.app, data.url)
 
-		var child= Child.get(data.uid, dir)
+		var child= Child.get(data.uid, dir, this.app.log)
 		await child.init()
 	}
 
-	static enabled(args,callback){
+	enabled(args){
 		
 		var req= args.request
 		var res= args.response
