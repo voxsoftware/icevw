@@ -5,8 +5,10 @@ class Child{
 	
 	static get(uid, path, Log){
 		var e
-		if(!(e=Child.d[uid]))
+		if(!(e=Child.d[uid])){
 			e= new Child(uid,path, Log)
+			Child.d[uid]=e
+		}
 		return e
 	}
 

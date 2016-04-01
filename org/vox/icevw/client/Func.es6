@@ -1,6 +1,8 @@
 class Func{
-	constructor(icevw){
+	constructor(icevw,name,prefix){
 		this.icevw= icevw
+		this.name= name
+		this.prefix= prefix||""
 	}
 
 	get invoke(){
@@ -10,7 +12,7 @@ class Func{
 		var icevw= this.icevw
 		return this.$func= function(){
 			var args= Array.prototype.slice.call(arguments, 0, arguments.length)
-			return icevw.apiCall(self.name, args)
+			return icevw.apiCall(self.prefix+ self.name, args)
 		}
 	}
 

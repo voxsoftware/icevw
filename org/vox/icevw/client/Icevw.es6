@@ -1,5 +1,5 @@
 var uniqid= require("uniqid")
-var Func= require("./Func.es6")
+var Func= require("./Func.es6").default
 
 var $= core.VW.Web.JQuery
 var root={}
@@ -11,7 +11,7 @@ class Icevw{
 	
 	
 	constructor(){
-		this.url= "http://localhost:49672";
+		this.url= "http://localhost:49671";
 		this.uid= uniqid()
 		this.Funcs={}
 		this.init()
@@ -35,13 +35,14 @@ class Icevw{
 
 	apiCall(method, args){
 		var req= new core.VW.Http.Request(this.url+"/api/call")
+		req.method='POST'
 		req.body={
 			"method": method,
 			"uid": this.uid,
-			"arguments": args||[]
+			"arguments": JSON.stringify(args||[])
 		}
 		
-		var task= vox.getJsonResponse(req)
+		var task= vox.platform.getJsonResponseAsync(req)
 		return task
 	}
 
@@ -59,7 +60,7 @@ class Icevw{
 		spars.push("&")
 		spars.push("uid=" + self.uid)
 		spars.push("&")
-		spars.push("app=" + pars.app)
+		spars.push("app=" + args.app)
 
 
 		var iframe= self.iframe
@@ -108,7 +109,7 @@ class Icevw{
 		$("body").append(this.iframe)
 
 		root.addEventListener("message",(event)=>{
-			if(event.origin==url){
+			if(event.origin==this.url){
 				var data=JSON.parse(event.data);
 				if(data.type=="icevw.notauthorized"){
 					var er=new core.System.Exception(data.error)

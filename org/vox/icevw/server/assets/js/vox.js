@@ -701,7 +701,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			return;
 		}
 		if(!(err instanceof Error)){
-			err= new core.System.Exception(err.toString(), err);
+			var ex= new core.System.Exception(err.message || err.toString(), err);
+			if(typeof err =="object"){
+				for(var id in err){
+					ex[id]=err[id]
+				}
+			}
+			err= ex
 		}
 		this.$isfaulted=true;
 		return this.$exception= err;

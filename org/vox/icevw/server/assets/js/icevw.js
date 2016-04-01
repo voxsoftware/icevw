@@ -64,7 +64,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var uniqid = __webpack_require__(3);
-	var Func = __webpack_require__(4);
+	var Func = __webpack_require__(4).default;
 	var $ = core.VW.Web.JQuery;
 	var root = {};
 	var vox = core.VW.Web.Vox;
@@ -75,7 +75,7 @@
 	        Icevw.constructor ? Icevw.constructor.apply(this, arguments) : Icevw.$super && Icevw.$super.constructor.apply(this, arguments);
 	    };
 	    Icevw.constructor = function () {
-	        this.url = 'http://localhost:49672';
+	        this.url = 'http://localhost:49671';
 	        this.uid = uniqid();
 	        this.Funcs = {};
 	        this.init();
@@ -94,12 +94,13 @@
 	    };
 	    Icevw.prototype.apiCall = function (method, args) {
 	        var req = new core.VW.Http.Request(this.url + '/api/call');
+	        req.method = 'POST';
 	        req.body = {
 	            'method': method,
 	            'uid': this.uid,
-	            'arguments': args || []
+	            'arguments': JSON.stringify(args || [])
 	        };
-	        var task = vox.getJsonResponse(req);
+	        var task = vox.platform.getJsonResponseAsync(req);
 	        return task;
 	    };
 	    Icevw.prototype.adquire = function (args) {
@@ -116,7 +117,7 @@
 	        spars.push('&');
 	        spars.push('uid=' + self.uid);
 	        spars.push('&');
-	        spars.push('app=' + pars.app);
+	        spars.push('app=' + args.app);
 	        var iframe = self.iframe;
 	        iframe.attr('src', self.url + '/require?' + spars.join(''));
 	        iframe.css('width', '100%');
@@ -157,7 +158,7 @@
 	        $('body').append(this.iframe);
 	        root.addEventListener('message', function (self$0) {
 	            return function (event) {
-	                if (event.origin == url) {
+	                if (event.origin == self$0.url) {
 	                    var data = JSON.parse(event.data);
 	                    if (data.type == 'icevw.notauthorized') {
 	                        var er = new core.System.Exception(data.error);
@@ -215,8 +216,10 @@
 	    var Func = function Func() {
 	        Func.constructor ? Func.constructor.apply(this, arguments) : Func.$super && Func.$super.constructor.apply(this, arguments);
 	    };
-	    Func.constructor = function (icevw) {
+	    Func.constructor = function (icevw, name, prefix) {
 	        this.icevw = icevw;
+	        this.name = name;
+	        this.prefix = prefix || '';
 	    };
 	    Func.prototype.__defineGetter__('invoke', function () {
 	        if (this.$func)
@@ -225,7 +228,7 @@
 	        var icevw = this.icevw;
 	        return this.$func = function () {
 	            var args = Array.prototype.slice.call(arguments, 0, arguments.length);
-	            return icevw.apiCall(self.name, args);
+	            return icevw.apiCall(self.prefix + self.name, args);
 	        };
 	    });
 	}

@@ -9,7 +9,7 @@ class JsonResponse{
 	write(data){
 
 		
-		var isError;
+		var isError,code;
 		if(data===undefined || data===null){
 			data= "null";
 		}
@@ -30,7 +30,9 @@ class JsonResponse{
 				for(var id of keys){
 					r[id]= data[id];
 				}
+				r= {error:r}
 				data= safejson(r)
+				code=500
 			}
 			else{
 				data= safejson(data)
@@ -40,7 +42,7 @@ class JsonResponse{
 		try{
 
 			// Escribir el encabezado
-			this.response.writeHead(200,{
+			this.response.writeHead(code||200,{
 				"Content-type": "application/json"
 			});
 

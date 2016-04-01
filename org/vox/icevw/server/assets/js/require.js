@@ -88,39 +88,41 @@
 	            while (1)
 	                switch (context$1$0.prev = context$1$0.next) {
 	                case 0:
+	                    $('.modal .load').show();
+	                    $('.modal a').hide();
 	                    self = this;
 	                    req = new core.VW.Http.Request('/api/load');
 	                    req.body = self.arguments;
 	                    req.method = 'POST';
-	                    context$1$0.prev = 4;
-	                    context$1$0.next = 7;
+	                    context$1$0.prev = 6;
+	                    context$1$0.next = 9;
 	                    return regeneratorRuntime.awrap(vox.platform.getJsonResponseAsync(req));
-	                case 7:
+	                case 9:
 	                    response = context$1$0.sent;
-	                    context$1$0.next = 15;
+	                    context$1$0.next = 17;
 	                    break;
-	                case 10:
-	                    context$1$0.prev = 10;
-	                    context$1$0.t0 = context$1$0['catch'](4);
+	                case 12:
+	                    context$1$0.prev = 12;
+	                    context$1$0.t0 = context$1$0['catch'](6);
 	                    $('.modal').voxmodal()[0].close();
 	                    window.parent.postMessage(JSON.stringify({
 	                        'type': 'icevw.adquireerror',
 	                        'error': context$1$0.t0
 	                    }), self.arguments.domain);
 	                    return context$1$0.abrupt('return', false);
-	                case 15:
+	                case 17:
 	                    window.parent.postMessage(JSON.stringify({
 	                        'type': 'icevw.adquiredandloaded',
 	                        'data': response
 	                    }), self.arguments.domain);
 	                    return context$1$0.abrupt('return', true);
-	                case 17:
+	                case 19:
 	                case 'end':
 	                    return context$1$0.stop();
 	                }
 	        }, null, this, [[
-	                4,
-	                10
+	                6,
+	                12
 	            ]]);
 	    };
 	    Require.prototype.initEvents = function () {
@@ -143,28 +145,26 @@
 	                            'type': 'icevw.adquired',
 	                            'data': response
 	                        }), self.arguments.domain);
-	                        $('.modal .load').show();
-	                        $('.modal a').hide();
-	                        context$1$0.next = 11;
+	                        context$1$0.next = 9;
 	                        return regeneratorRuntime.awrap(self.load());
-	                    case 11:
-	                        context$1$0.next = 17;
+	                    case 9:
+	                        context$1$0.next = 15;
 	                        break;
-	                    case 13:
-	                        context$1$0.prev = 13;
+	                    case 11:
+	                        context$1$0.prev = 11;
 	                        context$1$0.t0 = context$1$0['catch'](0);
 	                        $('.modal').voxmodal()[0].close();
 	                        window.parent.postMessage(JSON.stringify({
 	                            'type': 'icevw.adquireerror',
 	                            'error': context$1$0.t0
 	                        }), self.arguments.domain);
-	                    case 17:
+	                    case 15:
 	                    case 'end':
 	                        return context$1$0.stop();
 	                    }
 	            }, null, this, [[
 	                    0,
-	                    13
+	                    11
 	                ]]);
 	        };
 	        this.events.nopermitir = function () {

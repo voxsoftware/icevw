@@ -4,7 +4,7 @@ import Log from './ConsoleLog'
 import fs from 'fs'
 import Router from "./routes/Router"
 import sesion from './session'
-
+import JsonResponse from './JsonResponse'
 class App{
 
 	constructor({port}){
@@ -68,11 +68,11 @@ class App{
 		}catch(e){
 			try{
 				args.response.statusCode=500
-				try{args.response.write(JSON.stringify({error:e.stack},4,'\t'));}catch(ex){}
+				var json= new JsonResponse(args)
+				try{json.write(e)}catch(ex){}
 				args.response.end()
 			}
-			catch(ex){}
-			
+			catch(ex){}			
 			this.log.printError(e)
 
 		}

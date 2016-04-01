@@ -20,6 +20,9 @@ class Require{
 	}
 
 	async load(){
+
+		$(".modal .load").show();
+		$(".modal a").hide();
 		var self= this
 		var req= new core.VW.Http.Request("/api/load")
 		req.body= self.arguments
@@ -57,10 +60,7 @@ class Require{
 					"data": response
 				}), self.arguments.domain);
 
-				$(".modal .load").show();
-				$(".modal a").hide();
-
-
+				
 				await self.load()
 
 				
