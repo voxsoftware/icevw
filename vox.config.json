@@ -16,7 +16,7 @@
             "id": "voxsoftware.icevw",
             "comment": "Utilice recursos del equipo desde la web",
             "mimetype": [],
-            "exec":"index.coffee"
+            "exec":"init"
         }
     }
 }
