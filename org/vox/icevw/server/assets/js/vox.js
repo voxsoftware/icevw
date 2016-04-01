@@ -24998,7 +24998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            task.beforeExpose(function(){
 	                try{
 	                    var data= JSON.parse(task.result.body)
-	                    if(data.error){
+	                    if(data && data.error){
 	                        task.exception= data.error
 	                    }
 	                    return data
