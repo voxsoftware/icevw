@@ -1,7 +1,7 @@
 {
 	"name": "icevw",
   	"description": "Ejecute código del lado cliente desde el navegador ",
-  	"version": "0.1.1",
+  	"version": "0.1.2",
 	"main":"./index",
 	"license":"MIT",
 	"author": {

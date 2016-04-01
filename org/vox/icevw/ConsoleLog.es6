@@ -2,6 +2,8 @@
 class Log{
 	init(){
 		//core.VW.Console.writeLine()
+		process.stdout.setEncoding('utf8')
+		process.stdout.on('error', function(err){})
 	}
 	printRequest(args){
 		core.VW.Console.foregroundColor= core.System.ConsoleColor.White
@@ -35,12 +37,12 @@ class Log{
 		core.VW.Console.backgroundColor= core.System.ConsoleColor.Red
 		core.VW.Console.write("ERROR")
 		core.VW.Console.resetColors()
-		core.VW.Console.write("", ex.message +" | " +ex.stack).writeLine()	
+		core.VW.Console.writeLine("", ex.message +" | " +ex.stack)
 		//if(ex.errors){
 			core.VW.Console.writeLine("---------- Información extra")
 			for(var id in ex){
 				if(id!="stack" && id!='message'){
-					core.VW.Console.coloredWriteLine(id,": ", ex[id])
+					core.VW.Console.writeLine(id,": ", ex[id])
 				}
 			}
 		//}		
