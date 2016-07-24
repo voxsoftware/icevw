@@ -11,6 +11,13 @@
                 "winicon": "icevw.ico",
                 "vendor":true
             },
+
+            "osxicon":{
+                "register": true,
+                "icon": "voxsoftware-icevw.icns",
+                "size": "256",
+                "vendor":true
+            },
             "categories": ["Programming", "Network", "Application"],
             "name": "IceVW",
             "id": "voxsoftware.icevw",

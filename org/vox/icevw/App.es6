@@ -66,13 +66,23 @@ class App{
 			await args.catch(args.continue)
 
 		}catch(e){
+
 			try{
+				args.response.statusCode=500
+				try{args.response.write(JSON.stringify({error:e.stack},4,'\t'));}catch(ex){}
+				args.response.end()
+			}
+			catch(ex){}
+			
+
+			/*try{
 				args.response.statusCode=500
 				var json= new JsonResponse(args)
 				try{json.write(e)}catch(ex){}
 				args.response.end()
 			}
 			catch(ex){}			
+			*/
 			this.log.printError(e)
 
 		}

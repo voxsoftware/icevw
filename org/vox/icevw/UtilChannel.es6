@@ -7,7 +7,9 @@ class UtilChannel{
 
 	/* Descomprime archivo VCF */
 	decompress(filein, dirout){
-		return core.VW.VcfUtil.decompressToFolder(filein, dirout)
+		var zip= new core.System.Compression.ZipFile(filein)
+		return zip.extractAllTo(dirout)
+		//return core.VW.VcfUtil.decompressToFolder(filein, dirout)
 	}
 
 	static start(){

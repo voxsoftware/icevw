@@ -21,11 +21,20 @@ class Child{
 
 	async init(){
 		arg=process.argv
+		
 		var p= ChildProcess.spawn(arg[0],[arg[1], this.path])
 		this.ipc= new core.VW.IPC.Comunication()
 		this.ipc.init(p)
 		this.$SHM= new core.VW.IPC.ShareMethods(this.ipc)
-		
+		/*
+		p.stderr.on("data", function(b){
+			vw.info("INFO",b.toString())
+		})
+
+		p.stdout.on("data", function(b){
+			vw.info("INFO", b.toString())
+		})
+		*/
 		p.on('exit', ()=>{
 			this.exited= true
 			this.log.printInfo("Child", "Proceso hijo finalizado: " + p.pid)
@@ -58,12 +67,12 @@ class Child{
 
 
 	static async apiCall(data){
-		var uid= data.uid
+		var uid= data.uid, app
 		if(!uid)
 			throw new core.System.Exception("Debe especificar el `uid` de la aplicación")
 
 
-		var app= Child.get(uid)
+		app= Child.get(uid)
 		if(!app)
 			throw new core.System.Exception(`La aplicación con uid ${uid} no es válida. `)
 		if(data.method=="??"){
