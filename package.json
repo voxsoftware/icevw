@@ -1,7 +1,7 @@
 {
 	"name": "icevw",
   	"description": "Ejecute código del lado cliente desde el navegador ",
-  	"version": "0.1.6",
+  	"version": "0.1.7",
 	"main":"./index",
 	"license":"MIT",
 	"author": {
@@ -18,12 +18,13 @@
 	],
 	"repository": {
 	    "type": "git",
-	    "url": "https://gitlab.com/voxsoftware/icevw"
+	    "url": "https://github.com/voxsoftware/icevw"
 	},
 	"dependencies": {
     	"vw-session-file-store": "^0.x",
     	"express-session": "^1.13.0",
     	"uniqid": ">=1.0.0",
-    	"md5": "^2.1.0"
+    	"md5": "^2.1.0",
+    	"npm-registry": "^0.1.13"
     }
 }

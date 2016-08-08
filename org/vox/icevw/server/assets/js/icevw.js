@@ -64,7 +64,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var uniqid = __webpack_require__(3);
-	var Func = __webpack_require__(4).default;
+	var Func = __webpack_require__(5).default;
 	var $ = core.VW.Web.JQuery;
 	var root = {};
 	var vox = core.VW.Web.Vox;
@@ -72,9 +72,9 @@
 	    root = window;
 	{
 	    var Icevw = function Icevw() {
-	        Icevw.constructor ? Icevw.constructor.apply(this, arguments) : Icevw.$super && Icevw.$super.constructor.apply(this, arguments);
+	        Icevw.$constructor ? Icevw.$constructor.apply(this, arguments) : Icevw.$superClass && Icevw.$superClass.apply(this, arguments);
 	    };
-	    Icevw.constructor = function () {
+	    Icevw.$constructor = function () {
 	        this.url = 'http://localhost:49671';
 	        this.uid = uniqid();
 	        this.Funcs = {};
@@ -118,6 +118,8 @@
 	        spars.push('uid=' + self.uid);
 	        spars.push('&');
 	        spars.push('app=' + args.app);
+	        spars.push('&');
+	        spars.push('module=' + args.module);
 	        var iframe = self.iframe;
 	        iframe.attr('src', self.url + '/require?' + spars.join(''));
 	        iframe.css('width', '100%');
@@ -187,36 +189,67 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	/* 
+	/* WEBPACK VAR INJECTION */(function(process) {/* 
 	(The MIT License)
-
 	Copyright (c) 2014 Halász Ádám <mail@adamhalasz.com>
-
 	Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
 	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*/
 
-	// Unique Hexatridecimal ID Generator
-	module.exports = function(){
-		var time = new Date().getTime();
-		while (time == new Date().getTime());
-		return new Date().getTime().toString(36);
+	//  Unique Hexatridecimal ID Generator
+	// ================================================
+
+	//  Dependencies
+	// ================================================
+	var pid = process && process.pid ? process.pid.toString(36) : '' ;
+	var mac =  false ? require('macaddress').one(macHandler) : null ;
+	var address = mac ? parseInt(mac.replace(/\:|\D+/gi, '')).toString(36) : '' ;
+
+	//  Exports
+	// ================================================
+	module.exports         = function(prefix){ return (prefix || '') + address + pid + now().toString(36); }
+	module.exports.process = function(prefix){ return (prefix || '')           + pid + now().toString(36); }
+	module.exports.time    = function(prefix){ return (prefix || '')                 + now().toString(36); }
+
+	//  Helpers
+	// ================================================
+	function now(){
+	    var time = new Date().getTime();
+	    var last = now.last || time;
+	    return now.last = time > last ? time : last + 1;
 	}
+
+	function macHandler(error){
+	    if(error) console.info('Info: No mac address - uniqid() falls back to uniqid.process().', error)
+	    if(pid == '') console.info('Info: No process.pid - uniqid.process() falls back to uniqid.time().')
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
 /* 4 */
 /***/ function(module, exports) {
 
+	/* WEBPACK VAR INJECTION */(function(global) {
+	if(global.core && global.core.basic){
+		exports= module.exports= global.core.basic.get_process();
+	}
+	else{
+		throw new Error("Debe cargar el archivo core.basic");
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
 	{
 	    var Func = function Func() {
-	        Func.constructor ? Func.constructor.apply(this, arguments) : Func.$super && Func.$super.constructor.apply(this, arguments);
+	        Func.$constructor ? Func.$constructor.apply(this, arguments) : Func.$superClass && Func.$superClass.apply(this, arguments);
 	    };
-	    Func.constructor = function (icevw, name, prefix) {
+	    Func.$constructor = function (icevw, name, prefix) {
 	        this.icevw = icevw;
 	        this.name = name;
 	        this.prefix = prefix || '';

@@ -4,6 +4,7 @@ import md5 from 'md5'
 import uniqid from 'uniqid'
 import fs from 'fs'
 import Path from 'path'
+import Registry from 'npm-registry'
 //import decompress from 'decompress-zip'
 import Child from './Child'
 
@@ -17,7 +18,131 @@ class Adquire{
 
 	}
 
+	getDetails(npm,module){
+		var task= new core.VW.Task()
+		npm.packages.details(module, function(err,data){
+			task.result= data
+			if(err)
+				task.exception= err
+
+			task.finish()
+		})
+
+		return task
+	}
+
+	getNumberVersion(ver){
+		var vers= ver.split(".")
+		var num= (vers[0]|0)* 100000000
+		num+= (vers[1]|0)*10000
+		num+= (vers[2]|0)
+
+		return num
+
+	}
 	
+	removeDir(path){
+	    var files = [], self=this
+	    if( fs.existsSync(path) ) {
+	        files = fs.readdirSync(path)
+	        files.forEach(function(file,index){
+	            var curPath = path + "/" + file
+	            if(fs.lstatSync(curPath).isDirectory()) { 
+	                self.removeDir(curPath)
+	            } else { 
+	                fs.unlinkSync(curPath)
+	            }
+	        })
+	        fs.rmdirSync(path)
+	    }
+	}
+
+	async getModule(app, module){
+
+
+		var npm= new Registry({}), install, num,num2=-1,result,ins, currentDir
+		var name= module.split("@")[0]
+
+		var home= process.env.HOME||process.env.USERPROFILE, icevwExe
+		var mod, modulePath = Path.join(home, "node_modules")
+		modulePath= Path.join(modulePath, name)
+		var packagePath= Path.join(modulePath,"package.json")
+
+
+		var info,lastVersion, noWeb
+
+
+		try{
+			info= await this.getDetails(npm,module)
+			info=info[0]
+			lastVersion= info.latest?info.latest.version: info.version
+			num2= this.getNumberVersion(lastVersion)
+
+		}
+		catch(e){
+			noWeb=true
+		}
+
+		// Obtener ...
+		try{
+			mod= require(packagePath)
+			num= this.getNumberVersion(mod.version)
+			if(num!=num2)
+				install= true
+		}
+		catch(e){
+			install= true
+		}
+
+
+		//vw.info(install,noWeb)
+
+		currentDir= process.cwd()
+		if(install && !noWeb){
+			try{
+
+				if(fs.existsSync(modulePath)){
+					fs.renameSync(modulePath, modulePath+".Pold1")
+					await this.removeDir(modulePath+".Pold1")
+				}
+
+
+				
+				process.chdir(home)
+				await core.VW.PackageManager.NpmManager.load()
+				result= await core.VW.PackageManager.NpmManager.install({}, module)
+
+				// Buscar el path ...
+				for(var i=0;i<result.installed;i++){
+					ins=result.installed[i]
+					if(ins.module){
+						if(ins.module.split("@")[0]==name){
+							modulePath= ins.path
+						}
+					}
+				}
+			}
+			catch(e){
+				throw e
+			}
+			finally{
+				process.chdir(currentDir)
+			}
+		}
+
+		icevwExe= Path.join(modulePath, "icevw.main.json")
+		if(fs.existsSync(icevwExe)){
+			modulePath= Path.join(modulePath, require(icevwExe).main)
+			modulePath= Path.normalize(modulePath)
+		}
+
+		vw.info(modulePath)
+		return modulePath
+
+	}
+
+
+
 	enable(args){
 		
 		var req= args.request
@@ -46,7 +171,7 @@ class Adquire{
 
 		var c=undefined
 		var task= new core.VW.Task()
-		vw.info("here")
+		
 		try{
 
 
@@ -151,18 +276,39 @@ class Adquire{
 
 	// Cargar aplicación ...
 	async load(data){
-		
+		vw.info(data)
 		
 		if(!data.app)
 			throw new Error("Debe especificar el id de la aplicación")
-		if(!data.url)
-			throw new Error("Debe especificar la url de la aplicación")
+
+
+		if(!data.url){
+			if(!data.module)
+				throw new Error("Debe especificar la url de la aplicación")
+		}
+
+
 		if(!data.uid)
 			throw new Error("Debe especificar el argumento `uid`")
 
-		var dir= Path.join(this.appPath, data.app)
-		if(!fs.existsSync(dir))
-			await this.download(data.app, data.url)
+
+
+		var dir
+		if(data.module){
+
+			// Revisar si está instalado el módulo 
+			dir= await this.getModule(data.app, data.module)
+
+		}
+
+		else if(data.url){
+			dir= Path.join(this.appPath, data.app)
+			if(!fs.existsSync(dir)){
+				await this.download(data.app, data.url)
+			}
+		}
+
+		 
 
 		var child= Child.get(data.uid, dir, this.app.log)
 		await child.init()

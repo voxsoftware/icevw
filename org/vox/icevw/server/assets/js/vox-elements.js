@@ -54,67 +54,72 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = core.VW.Web.Elements = core.VW.Web.Elements || {};
-	exports.get_Element = function () {
+	var e = core.VW.Web.Elements = core.VW.Web.Elements || {};
+	exports = module.exports = core;
+	e.get_Element = function () {
 	    return __webpack_require__(1).default;
 	};
-	exports.get_Card = function () {
+	e.get_Card = function () {
 	    return __webpack_require__(3).default;
 	};
-	exports.get_Dropdown = function () {
+	e.get_Dropdown = function () {
 	    return __webpack_require__(4).default;
 	};
 	var Input = __webpack_require__(5);
-	exports.get_Input = function () {
+	e.get_Input = function () {
 	    return Input.default;
 	};
-	exports.get_mask = function () {
+	e.get_mask = function () {
 	    return Input.mask;
 	};
-	exports.get_Modal = function () {
+	e.get_Modal = function () {
 	    return __webpack_require__(9).default;
 	};
-	exports.get_ScrollFire = function () {
+	e.get_ScrollFire = function () {
 	    return __webpack_require__(10).default;
 	};
-	exports.get_Parallax = function () {
+	e.get_Parallax = function () {
 	    return __webpack_require__(11).default;
 	};
-	exports.get_Pinned = function () {
+	e.get_Pinned = function () {
 	    return __webpack_require__(12).default;
 	};
-	exports.get_SideNav = function () {
+	e.get_SideNav = function () {
 	    return __webpack_require__(13).default;
 	};
-	exports.get_Tab = function () {
+	e.get_Tab = function () {
 	    return __webpack_require__(14).default;
 	};
-	exports.get_TabGroup = function () {
+	e.get_TabGroup = function () {
 	    return __webpack_require__(15).default;
 	};
-	exports.get_Toast = function () {
+	e.get_Toast = function () {
 	    return __webpack_require__(16).default;
 	};
-	exports.get_Tooltip = function () {
+	e.get_Tooltip = function () {
 	    return __webpack_require__(17).default;
 	};
-	exports.get_HasTooltip = function () {
+	e.get_HasTooltip = function () {
 	    return __webpack_require__(18).default;
 	};
-	core.VW.Util.createProperties(exports);
-	exports.register = function () {
-	    exports.Card.register();
-	    exports.Dropdown.register();
-	    exports.Input.register();
-	    exports.Modal.register();
-	    exports.ScrollFire.register();
-	    exports.Parallax.register();
-	    exports.Pinned.register();
-	    exports.SideNav.register();
-	    exports.TabGroup.register();
-	    exports.Toast.register();
-	    exports.Tooltip.register();
-	    exports.HasTooltip.register();
+	e.get_Elastic = function () {
+	    return __webpack_require__(19).default;
+	};
+	core.VW.Util.createProperties(e);
+	e.register = function () {
+	    e.Card.register();
+	    e.Dropdown.register();
+	    e.Input.register();
+	    e.Modal.register();
+	    e.ScrollFire.register();
+	    e.Parallax.register();
+	    e.Pinned.register();
+	    e.SideNav.register();
+	    e.TabGroup.register();
+	    e.Toast.register();
+	    e.Tooltip.register();
+	    e.HasTooltip.register();
+	    e.Elastic.register();
 	};
 
 /***/ },
@@ -125,13 +130,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var vox = core.VW.Web.Vox;
 	{
 	    var Element = function Element() {
-	        Element.constructor ? Element.constructor.apply(this, arguments) : Element.$super && Element.$super.constructor.apply(this, arguments);
+	        Element.$constructor ? Element.$constructor.apply(this, arguments) : Element.$superClass && Element.$superClass.apply(this, arguments);
 	    };
 	    Element.prototype = Object.create(events.prototype);
 	    Element.prototype.constructor = Element;
 	    Element.$super = events.prototype;
-	    Element.constructor = function () {
-	        Element.$super.constructor.call(this);
+	    Element.$superClass = events;
+	    Element.$constructor = function () {
+	        Element.$superClass.call(this);
 	    };
 	    Element.prototype.createEvent = function (eventName, originalEvent) {
 	        var ev = vox.platform.createEvent(eventName);
@@ -174,11 +180,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var vox = core.VW.Web.Vox;
 	{
 	    var Card = function Card() {
-	        Card.constructor ? Card.constructor.apply(this, arguments) : Card.$super && Card.$super.constructor.apply(this, arguments);
+	        Card.$constructor ? Card.$constructor.apply(this, arguments) : Card.$superClass && Card.$superClass.apply(this, arguments);
 	    };
 	    Card.prototype = Object.create(Element.prototype);
 	    Card.prototype.constructor = Card;
 	    Card.$super = Element.prototype;
+	    Card.$superClass = Element;
 	    Card.register = function () {
 	        $.fn.voxcard = function () {
 	            var dp = [];
@@ -200,8 +207,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            $('.card').voxcard();
 	        });
 	    };
-	    Card.constructor = function (obj) {
-	        Card.$super.constructor.call(this);
+	    Card.$constructor = function (obj) {
+	        Card.$superClass.call(this);
 	        obj = $(obj);
 	        var f = this.$ = {};
 	        f.obj = obj;
@@ -270,11 +277,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	function init(document) {
 	    {
 	        var Dropdown = function Dropdown() {
-	            Dropdown.constructor ? Dropdown.constructor.apply(this, arguments) : Dropdown.$super && Dropdown.$super.constructor.apply(this, arguments);
+	            Dropdown.$constructor ? Dropdown.$constructor.apply(this, arguments) : Dropdown.$superClass && Dropdown.$superClass.apply(this, arguments);
 	        };
 	        Dropdown.prototype = Object.create(Element.prototype);
 	        Dropdown.prototype.constructor = Dropdown;
 	        Dropdown.$super = Element.prototype;
+	        Dropdown.$superClass = Element;
 	        Dropdown.register = function () {
 	            $.fn.voxdropdown = function () {
 	                var dp = [];
@@ -296,8 +304,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                $('.dropdown').voxdropdown();
 	            });
 	        };
-	        Dropdown.constructor = function (obj) {
-	            Dropdown.$super.constructor.call(this);
+	        Dropdown.$constructor = function (obj) {
+	            Dropdown.$superClass.call(this);
 	            obj = $(obj);
 	            var f = this.$ = {};
 	            f.obj = obj;
@@ -463,17 +471,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Element = __webpack_require__(1).default;
 	var $ = core.VW.Web.JQuery;
 	var vox = core.VW.Web.Vox;
-	{
-	    var mask = __webpack_require__(6);
-	    exports.mask = mask;
-	}
+	var mask = __webpack_require__(6);
+	exports.mask = mask;
 	{
 	    var Input = function Input() {
-	        Input.constructor ? Input.constructor.apply(this, arguments) : Input.$super && Input.$super.constructor.apply(this, arguments);
+	        Input.$constructor ? Input.$constructor.apply(this, arguments) : Input.$superClass && Input.$superClass.apply(this, arguments);
 	    };
 	    Input.prototype = Object.create(Element.prototype);
 	    Input.prototype.constructor = Input;
 	    Input.$super = Element.prototype;
+	    Input.$superClass = Element;
 	    Input.register = function () {
 	        $.fn.voxinput = function () {
 	            var dp = [];
@@ -519,8 +526,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return result;
 	        };
 	    };
-	    Input.constructor = function (obj) {
-	        Input.$super.constructor.call(this);
+	    Input.$constructor = function (obj) {
+	        Input.$superClass.call(this);
 	        obj = $(obj);
 	        var f = this.$ = {};
 	        f.obj = obj;
@@ -538,7 +545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    Input.prototype.obtainProps = function () {
 	        var f = this.$;
-	        f.inp = f.obj.find('input');
+	        f.inp = f.obj.find('input,textarea');
 	        f.label = f.obj.find('label');
 	        f.label.addClass('normal');
 	        f.action = f.obj.find('.action');
@@ -611,7 +618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            f.obj.addClass('active');
 	        };
 	        var oninput = function (self$0) {
-	            return function () {
+	            return function (ev) {
 	                f.obj.removeClass('error warning ok');
 	                self$0.emit('focus', ev);
 	                if (ev.defaultPrevented)
@@ -1330,11 +1337,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var modals = [];
 	{
 	    var Modal = function Modal() {
-	        Modal.constructor ? Modal.constructor.apply(this, arguments) : Modal.$super && Modal.$super.constructor.apply(this, arguments);
+	        Modal.$constructor ? Modal.$constructor.apply(this, arguments) : Modal.$superClass && Modal.$superClass.apply(this, arguments);
 	    };
 	    Modal.prototype = Object.create(Element.prototype);
 	    Modal.prototype.constructor = Modal;
 	    Modal.$super = Element.prototype;
+	    Modal.$superClass = Element;
 	    Modal.checkOpened = function () {
 	        var open;
 	        for (var i = 0; i < modals.length; i++) {
@@ -1391,8 +1399,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        });
 	    };
-	    Modal.constructor = function (obj) {
-	        Modal.$super.constructor.call(this);
+	    Modal.$constructor = function (obj) {
+	        Modal.$superClass.call(this);
 	        obj = $(obj);
 	        var f = this.$ = {};
 	        f.obj = obj;
@@ -1523,11 +1531,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var vox = core.VW.Web.Vox;
 	{
 	    var ScrollFire = function ScrollFire() {
-	        ScrollFire.constructor ? ScrollFire.constructor.apply(this, arguments) : ScrollFire.$super && ScrollFire.$super.constructor.apply(this, arguments);
+	        ScrollFire.$constructor ? ScrollFire.$constructor.apply(this, arguments) : ScrollFire.$superClass && ScrollFire.$superClass.apply(this, arguments);
 	    };
 	    ScrollFire.prototype = Object.create(Element.prototype);
 	    ScrollFire.prototype.constructor = ScrollFire;
 	    ScrollFire.$super = Element.prototype;
+	    ScrollFire.$superClass = Element;
 	    ScrollFire.register = function () {
 	        $.fn.voxscrollfire = function () {
 	            var dp = [];
@@ -1549,8 +1558,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            $('.scroll-fire').voxscrollfire();
 	        });
 	    };
-	    ScrollFire.constructor = function (obj) {
-	        ScrollFire.$super.constructor.call(this);
+	    ScrollFire.$constructor = function (obj) {
+	        ScrollFire.$superClass.call(this);
 	        obj = $(obj);
 	        var f = this.$ = {};
 	        f.obj = obj;
@@ -1659,11 +1668,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    {
 	        var Parallax = function Parallax() {
-	            Parallax.constructor ? Parallax.constructor.apply(this, arguments) : Parallax.$super && Parallax.$super.constructor.apply(this, arguments);
+	            Parallax.$constructor ? Parallax.$constructor.apply(this, arguments) : Parallax.$superClass && Parallax.$superClass.apply(this, arguments);
 	        };
 	        Parallax.prototype = Object.create(Element.prototype);
 	        Parallax.prototype.constructor = Parallax;
 	        Parallax.$super = Element.prototype;
+	        Parallax.$superClass = Element;
 	        Parallax.__defineGetter__('uid', function () {
 	            Parallax.id = Parallax.id | 0;
 	            return Parallax.id++;
@@ -1689,8 +1699,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                $('.parallax').voxparallax();
 	            });
 	        };
-	        Parallax.constructor = function (obj) {
-	            Parallax.$super.constructor.call(this);
+	        Parallax.$constructor = function (obj) {
+	            Parallax.$superClass.call(this);
 	            Parallax.objects.push(this);
 	            obj = $(obj);
 	            var f = this.$ = {};
@@ -1747,11 +1757,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var vox = core.VW.Web.Vox;
 	{
 	    var Pinned = function Pinned() {
-	        Pinned.constructor ? Pinned.constructor.apply(this, arguments) : Pinned.$super && Pinned.$super.constructor.apply(this, arguments);
+	        Pinned.$constructor ? Pinned.$constructor.apply(this, arguments) : Pinned.$superClass && Pinned.$superClass.apply(this, arguments);
 	    };
 	    Pinned.prototype = Object.create(Element.prototype);
 	    Pinned.prototype.constructor = Pinned;
 	    Pinned.$super = Element.prototype;
+	    Pinned.$superClass = Element;
 	    Pinned.register = function () {
 	        $.fn.voxpinned = function () {
 	            var dp = [];
@@ -1773,8 +1784,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            $('.pinned').voxpinned();
 	        });
 	    };
-	    Pinned.constructor = function (obj) {
-	        Pinned.$super.constructor.call(this);
+	    Pinned.$constructor = function (obj) {
+	        Pinned.$superClass.call(this);
 	        obj = $(obj);
 	        var f = this.$ = {};
 	        f.obj = obj;
@@ -1837,11 +1848,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	function init(window) {
 	    {
 	        var SideNav = function SideNav() {
-	            SideNav.constructor ? SideNav.constructor.apply(this, arguments) : SideNav.$super && SideNav.$super.constructor.apply(this, arguments);
+	            SideNav.$constructor ? SideNav.$constructor.apply(this, arguments) : SideNav.$superClass && SideNav.$superClass.apply(this, arguments);
 	        };
 	        SideNav.prototype = Object.create(Element.prototype);
 	        SideNav.prototype.constructor = SideNav;
 	        SideNav.$super = Element.prototype;
+	        SideNav.$superClass = Element;
 	        SideNav.init = function () {
 	            if (!SideNav.overlay) {
 	                SideNav.overlay = $('#sidenav-overlay');
@@ -1882,8 +1894,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                $('.side-nav').voxsidenav();
 	            });
 	        };
-	        SideNav.constructor = function (obj) {
-	            SideNav.$super.constructor.call(this);
+	        SideNav.$constructor = function (obj) {
+	            SideNav.$superClass.call(this);
 	            obj = $(obj);
 	            var f = this.$ = {};
 	            f.obj = obj;
@@ -1917,6 +1929,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.emit(ev);
 	        };
 	        SideNav.prototype.close = function (event) {
+	            var f = this.$;
 	            SideNav.overlay.css('opacity', 0);
 	            setTimeout(function () {
 	                SideNav.overlay.hide();
@@ -1926,6 +1939,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var ev = this.createEvent('close', event);
 	            ev.sidenav = this;
 	            this.emit(ev);
+	            setTimeout(function (self$0) {
+	                return function () {
+	                    self$0.G();
+	                };
+	            }(this), 500);
 	        };
 	        SideNav.prototype.toggle = function () {
 	            if (this.isOpened())
@@ -1934,6 +1952,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.open();
 	        };
 	        SideNav.prototype.$r = function () {
+	            if (SideNav.overlay.is(':visible'))
+	                return;
 	            var f = this.$;
 	            var po = f.obj.position();
 	            var v = true;
@@ -1953,7 +1973,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    };
 	                }(this));
 	            }
-	            var g = function (self$0) {
+	            var g = this.G = function (self$0) {
 	                return function () {
 	                    if (f.i) {
 	                        clearTimeout(f.i);
@@ -1983,13 +2003,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var vox = core.VW.Web.Vox;
 	{
 	    var Tab = function Tab() {
-	        Tab.constructor ? Tab.constructor.apply(this, arguments) : Tab.$super && Tab.$super.constructor.apply(this, arguments);
+	        Tab.$constructor ? Tab.$constructor.apply(this, arguments) : Tab.$superClass && Tab.$superClass.apply(this, arguments);
 	    };
 	    Tab.prototype = Object.create(Element.prototype);
 	    Tab.prototype.constructor = Tab;
 	    Tab.$super = Element.prototype;
-	    Tab.constructor = function (obj) {
-	        Tab.$super.constructor.call(this);
+	    Tab.$superClass = Element;
+	    Tab.$constructor = function (obj) {
+	        Tab.$superClass.call(this);
 	        obj = $(obj);
 	        var f = this.$ = {};
 	        f.obj = obj;
@@ -2082,11 +2103,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	function init(document) {
 	    {
 	        var Tabs = function Tabs() {
-	            Tabs.constructor ? Tabs.constructor.apply(this, arguments) : Tabs.$super && Tabs.$super.constructor.apply(this, arguments);
+	            Tabs.$constructor ? Tabs.$constructor.apply(this, arguments) : Tabs.$superClass && Tabs.$superClass.apply(this, arguments);
 	        };
 	        Tabs.prototype = Object.create(Element.prototype);
 	        Tabs.prototype.constructor = Tabs;
 	        Tabs.$super = Element.prototype;
+	        Tabs.$superClass = Element;
 	        Tabs.register = function () {
 	            $.fn.voxtabgroup = function () {
 	                var dp = [];
@@ -2108,8 +2130,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                $('.tabs').voxtabgroup();
 	            });
 	        };
-	        Tabs.constructor = function (obj) {
-	            Tabs.$super.constructor.call(this);
+	        Tabs.$constructor = function (obj) {
+	            Tabs.$superClass.call(this);
 	            obj = $(obj);
 	            var f = this.$ = {};
 	            f.obj = obj;
@@ -2226,11 +2248,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var vox = core.VW.Web.Vox;
 	{
 	    var Toast = function Toast() {
-	        Toast.constructor ? Toast.constructor.apply(this, arguments) : Toast.$super && Toast.$super.constructor.apply(this, arguments);
+	        Toast.$constructor ? Toast.$constructor.apply(this, arguments) : Toast.$superClass && Toast.$superClass.apply(this, arguments);
 	    };
 	    Toast.prototype = Object.create(Element.prototype);
 	    Toast.prototype.constructor = Toast;
 	    Toast.$super = Element.prototype;
+	    Toast.$superClass = Element;
 	    Toast.init = function () {
 	        if (!Toast.container) {
 	            Toast.container = $('.toast-container');
@@ -2275,8 +2298,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        });
 	    };
-	    Toast.constructor = function (obj) {
-	        Toast.$super.constructor.call(this);
+	    Toast.$constructor = function (obj) {
+	        Toast.$superClass.call(this);
 	        obj = $(obj);
 	        var f = this.$ = {};
 	        f.obj = obj;
@@ -2288,7 +2311,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Toast.prototype.init = function () {
 	        var f = this.$;
 	        f.obj.removeClass('toast');
-	        toast.container.append(f.obj);
+	        Toast.container.append(f.obj);
 	        f.obj.addClass('toast');
 	        this.events();
 	    };
@@ -2382,11 +2405,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	function init(window) {
 	    {
 	        var Tooltip = function Tooltip() {
-	            Tooltip.constructor ? Tooltip.constructor.apply(this, arguments) : Tooltip.$super && Tooltip.$super.constructor.apply(this, arguments);
+	            Tooltip.$constructor ? Tooltip.$constructor.apply(this, arguments) : Tooltip.$superClass && Tooltip.$superClass.apply(this, arguments);
 	        };
 	        Tooltip.prototype = Object.create(Element.prototype);
 	        Tooltip.prototype.constructor = Tooltip;
 	        Tooltip.$super = Element.prototype;
+	        Tooltip.$superClass = Element;
 	        Tooltip.register = function () {
 	            $.fn.voxtooltip = function () {
 	                var dp = [];
@@ -2406,8 +2430,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, '.tooltip');
 	            $('.tooltip').voxtooltip();
 	        };
-	        Tooltip.constructor = function (obj) {
-	            Tooltip.$super.constructor.call(this);
+	        Tooltip.$constructor = function (obj) {
+	            Tooltip.$superClass.call(this);
 	            obj = $(obj);
 	            var f = this.$ = {};
 	            f.obj = obj;
@@ -2430,9 +2454,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	        Tooltip.prototype.init = function () {
 	            var f = this.$;
-	            f.obj.removeClass('toast');
-	            toast.container.append(f.obj);
-	            f.obj.addClass('toast');
 	            this.events();
 	        };
 	        Tooltip.prototype.isOpened = function () {
@@ -2538,16 +2559,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            f.delay = undefined;
 	                        }
 	                        context$1$0.next = 12;
-	                        return regeneratorRuntime.awrap(f.acomode());
+	                        return regeneratorRuntime.awrap(this.acomode());
 	                    case 12:
 	                        f.lEvent = event ? event.type : '';
 	                        effect = f.obj.data('ineffect') || 'fadeIn short';
 	                        f.obj.addClass('opened');
-	                        f.obj.voxanimate(effect, undefined, function () {
-	                            var ev = this.createEvent('open', event);
-	                            ev.tooltip = this;
-	                            this.emit(ev);
-	                        });
+	                        f.obj.voxanimate(effect, undefined, function (self$0) {
+	                            return function () {
+	                                var ev = self$0.createEvent('open', event);
+	                                ev.tooltip = self$0;
+	                                self$0.emit(ev);
+	                            };
+	                        }(this));
 	                    case 16:
 	                    case 'end':
 	                        return context$1$0.stop();
@@ -2566,11 +2589,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            f.lEvent = undefined;
 	            f.obj.removeClass('opened');
 	            var effect = f.obj.data('outeffect') || 'fadeOut short';
-	            f.obj.voxanimate(effect, undefined, function () {
-	                var ev = this.createEvent('close');
-	                ev.tooltip = this;
-	                this.emit(ev);
-	            });
+	            f.obj.voxanimate(effect, undefined, function (self$0) {
+	                return function () {
+	                    var ev = self$0.createEvent('close');
+	                    ev.tooltip = self$0;
+	                    self$0.emit(ev);
+	                };
+	            }(this));
 	        };
 	        Tooltip.prototype.toggle = function () {
 	            this.isOpened() ? this.close() : this.open();
@@ -2601,7 +2626,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    if (ev.type == 'mouseenter')
 	                        self$0.activate();
 	                    else if (ev.type = 'mouseleave')
-	                        self.activateClose();
+	                        self$0.activateClose();
 	                };
 	            }(this));
 	            vox.platform.attachOuterClick(f.obj, {
@@ -2648,11 +2673,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	function init(window) {
 	    {
 	        var Tooltip = function Tooltip() {
-	            Tooltip.constructor ? Tooltip.constructor.apply(this, arguments) : Tooltip.$super && Tooltip.$super.constructor.apply(this, arguments);
+	            Tooltip.$constructor ? Tooltip.$constructor.apply(this, arguments) : Tooltip.$superClass && Tooltip.$superClass.apply(this, arguments);
 	        };
 	        Tooltip.prototype = Object.create(Element.prototype);
 	        Tooltip.prototype.constructor = Tooltip;
 	        Tooltip.$super = Element.prototype;
+	        Tooltip.$superClass = Element;
 	        Tooltip.createTooltip = function (obj) {
 	            var s = $('<div class=\'tooltip\'></div>');
 	            if (obj.data('class'))
@@ -2669,7 +2695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var o = $(this);
 	                    var t = undefined;
 	                    if (!(t = o.data('vox-hastooltip'))) {
-	                        t = new HasTooltip(o);
+	                        t = new Tooltip(o);
 	                        o.data('vox-hastooltip', t);
 	                    }
 	                    dp.push(t);
@@ -2681,8 +2707,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, '[data-hover=tooltip]');
 	            $('[data-hover=tooltip]').voxhastooltip();
 	        };
-	        Tooltip.constructor = function (obj) {
-	            Tooltip.$super.constructor.call(this);
+	        Tooltip.$constructor = function (obj) {
+	            Tooltip.$superClass.call(this);
 	            obj = $(obj);
 	            var f = this.$ = {};
 	            f.obj = obj;
@@ -2695,14 +2721,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (s)
 	                f.tip = $(s);
 	            else
-	                f.tip = HasTooltip.createTooltip(f.obj);
+	                f.tip = Tooltip.createTooltip(f.obj);
 	            f.tip = f.tip.voxtooltip()[0];
 	        };
 	        Tooltip.prototype.init = function () {
 	            var f = this.$;
-	            f.obj.removeClass('toast');
-	            toast.container.append(f.obj);
-	            f.obj.addClass('toast');
 	            this.events();
 	        };
 	        Tooltip.prototype.__defineGetter__('tooltip', function () {
@@ -2731,6 +2754,140 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return Tooltip;
 	}
 	exports.default = init(w);
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	var $ = core.VW.Web.JQuery;
+	var vox = core.VW.Web.Vox;
+	{
+	    var Elastic = function Elastic() {
+	        Elastic.$constructor ? Elastic.$constructor.apply(this, arguments) : Elastic.$superClass && Elastic.$superClass.apply(this, arguments);
+	    };
+	    Elastic.getStyleObject = function () {
+	        var dom = this.get(0);
+	        var style;
+	        var returns = {};
+	        if (window.getComputedStyle) {
+	            var camelize = function (a, b) {
+	                return b.toUpperCase();
+	            };
+	            style = window.getComputedStyle(dom, null);
+	            for (var i = 0, l = style.length; i < l; i++) {
+	                var prop = style[i];
+	                var camel = prop.replace(/\-([a-z])/g, camelize);
+	                var val = style.getPropertyValue(prop);
+	                returns[camel] = val;
+	            }
+	            ;
+	            return returns;
+	        }
+	        ;
+	        if (style = dom.currentStyle) {
+	            for (var prop in style) {
+	                returns[prop] = style[prop];
+	            }
+	            ;
+	            return returns;
+	        }
+	        ;
+	        return this.css();
+	    };
+	    Elastic.__defineGetter__('entities', function () {
+	        return {
+	            '&': '&amp;',
+	            '<': '&lt;',
+	            '>': '&gt;',
+	            '"': '&quot;',
+	            '\'': '&#39;',
+	            '/': '&#x2F;'
+	        };
+	    });
+	    Elastic.escapeHtml = function (html) {
+	        return String(html).replace(/[&<>"'\/]/g, function (s) {
+	            return this.entities[s];
+	        });
+	    };
+	    Elastic.register = function () {
+	        $.fn.voxelastic = function () {
+	            var dp = [];
+	            this.each(function () {
+	                var o = $(this);
+	                var t = undefined;
+	                if (!(t = o.data('vox-elastic'))) {
+	                    t = new Elastic(o);
+	                    o.data('vox-elastic', t);
+	                }
+	                dp.push(t);
+	            });
+	            return dp;
+	        };
+	        $(function () {
+	            vox.mutation.watchAppend($('body'), function (ev) {
+	                ev.jTarget.voxinput();
+	            }, '.vox-textarea, .vox-elastic');
+	            $('.vox-textarea, .vox-elastic').voxelastic();
+	        });
+	    };
+	    Elastic.$constructor = function (obj) {
+	        obj = $(obj);
+	        var f = this.$ = {};
+	        f.obj = obj;
+	        this.adjust(obj);
+	    };
+	    Elastic.prototype.adjust = function (obj) {
+	        var elastic = this;
+	        obj.each(function () {
+	            var e = $(this);
+	            if (!this.sxl) {
+	                this.sxl = {};
+	            }
+	            var div;
+	            if (!Elastic.adjustDiv) {
+	                div = $('<div>');
+	                div.addClass('sxl-elastic-provider');
+	                Elastic.adjustDiv = div;
+	                $('body').append(div);
+	            } else {
+	                div = Elastic.adjustDiv;
+	            }
+	            div.css(Elastic.getStyleObject.call(e));
+	            div.css('height', 'auto');
+	            div.css('position', 'fixed');
+	            div.css('top', '-100%');
+	            div.css('bottom', 'auto');
+	            div.show();
+	            if (!this.value) {
+	                div.html('&nbsp;');
+	            } else {
+	                div.html(Elastic.escapeHtml(this.value));
+	                var di = this.value[this.value.length - 1];
+	                if (di == '\r' || di == '\n') {
+	                    div.append('&nbsp;');
+	                }
+	            }
+	            var h = div.height();
+	            e.height(h);
+	            e.css('overflow', 'hidden');
+	            var self = this;
+	            if (!this.sxl.elastic) {
+	                this.sxl.elastic = function () {
+	                    if (self.sxl.elastic.i) {
+	                        clearTimeout(self.sxl.elastic.i);
+	                        self.sxl.elastic.i = undefined;
+	                    }
+	                    self.sxl.elastic.i = setTimeout(function () {
+	                        elastic.adjust($(self));
+	                    }, 100);
+	                };
+	                e.bind('change input cut paste keyup resize', this.sxl.elastic);
+	                $(window).resize(this.sxl.elastic);
+	            }
+	        });
+	    };
+	}
+	exports.default = Elastic;
 
 /***/ }
 /******/ ])

@@ -216,6 +216,7 @@ th {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transform: translate(0, 0);
+  line-height: inherit;
 }
 /* makes the font 33% larger relative to the icon container */
 .fa-lg {
@@ -4774,7 +4775,7 @@ th {
   min-width: 8%;
   right: 7%;
   display: block;
-  z-index: 1000;
+  z-index: 2100;
   max-width: 86%;
 }
 .toast-container .toast {
@@ -8338,21 +8339,20 @@ a.waves-effect .waves-ripple {
   background: black;
 }
 .modal-container {
+  overflow-y: auto;
   z-index: 2000;
   position: fixed;
-  top: 10%;
-  height: 80%;
-  padding: 0;
+  top: 8%;
+  height: 84%;
+  padding: 10px 0;
   width: 100%;
   display: none;
 }
 .modal-container .modal {
   display: none;
-  overflow-y: auto;
   margin: auto;
   background-color: white;
   border-radius: 2px;
-  max-height: 100%;
 }
 .modal-container .modal .modal-content {
   padding: 1.3em;
@@ -8660,6 +8660,9 @@ input[type=radio] {
 }
 .input-field.select select {
   display: none;
+}
+.input-field.select > input[type=text] {
+  position: absolute;
 }
 .input-field .select-wrapper .options-wrapper {
   min-width: 100%;
@@ -9292,7 +9295,7 @@ input[type=radio] {
 .dropdown-menu > li a,
 .nav .dropdown-menu > li a {
   display: block;
-  padding: 0.8em 1em;
+  padding: 0.5em 0.8em;
   width: 100%;
   clear: both;
 }
@@ -9361,7 +9364,7 @@ input[type=radio] {
   padding: 0;
   padding-bottom: 60px;
   list-style: none;
-  z-index: 999;
+  z-index: 9999;
   overflow-y: auto;
   overflow: hidden;
   will-change: left;
@@ -9406,7 +9409,7 @@ input[type=radio] {
   width: 10px;
   position: fixed;
   top: 0;
-  z-index: 998;
+  z-index: 9998;
 }
 #sidenav-overlay {
   position: fixed;
@@ -9415,7 +9418,7 @@ input[type=radio] {
   right: 0;
   height: 120vh;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 997;
+  z-index: 9997;
   will-change: opacity;
   display: block;
 }

@@ -61,6 +61,8 @@ class Icevw{
 		spars.push("uid=" + self.uid)
 		spars.push("&")
 		spars.push("app=" + args.app)
+		spars.push("&")
+		spars.push("module=" + args.module)
 
 
 		var iframe= self.iframe
