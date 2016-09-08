@@ -12,13 +12,12 @@ IceVW se ejecuta como una aplicación, servicio, que permite ejecutar código No
 3. Instale icevw
 4. Inicie icevw
 
-A continuación mostramos como realizar los pasos 2 a 4:
+A continuación mostramos como realizar los pasos 3 y 4:
 
 **Windows**
 Abra una ventana **cmd** como administrador. 
 
 ```sh
-> npm install -g vox-core
 > vox -install -g icevw
 > icevw
 ```
@@ -28,7 +27,6 @@ Abra una ventana **cmd** como administrador.
 Abra la aplicación de **terminal**
 
 ```sh
-> sudo npm install -g vox-core
 > sudo vox -install -g icevw
 > icevw
 ```

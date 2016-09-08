@@ -102,7 +102,7 @@ class App{
 		return sesion(this.sessionPath)
 	}
 
-	async start(){
+	async start(throwEr){
 		try{
 			await this.server.listen()
 			vw.info(`ICEVW ha sido iniciado en el puerto ${this.server.port}`)
@@ -111,6 +111,9 @@ class App{
 		}
 		catch(er){
 			this.log.printError(er)
+			if(throwEr)
+				throw er
+			
 		}
 	}
 }

@@ -76,6 +76,7 @@ class Adquire{
 			info= await this.getDetails(npm,module)
 			info=info[0]
 			lastVersion= info.latest?info.latest.version: info.version
+			//vw.log("Last version: ", lastVersion)
 			num2= this.getNumberVersion(lastVersion)
 
 		}
@@ -86,6 +87,7 @@ class Adquire{
 		// Obtener ...
 		try{
 			mod= require(packagePath)
+			//vw.log("Current version: ", mod.version)
 			num= this.getNumberVersion(mod.version)
 			if(num!=num2)
 				install= true
